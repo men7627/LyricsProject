@@ -38,10 +38,19 @@ namespace Presto.SWCamp.Lyrics
             var path = Path.Combine(Path.GetDirectoryName(fileName), lrcName);
             var lines = File.ReadAllLines(path);
             //가사 데이터 읽어 오기
+            string singer = null;                    //파트 저장할 변수 
             for (int i = 3; i < lines.Length; i++)
             {
-                string[] data = new string[2];
-                data = lines[i].Split(']');
+                string[] data = lines[i].Split(']'); 
+                if (data.Length == 2)                //파트 지정이 없는 부분
+                {
+                    data[1] = singer + data[1];      //이전 파트를 붙임
+                }
+                else if (data.Length == 3)           //파트 지정이 있는 부분
+                {
+                    singer = '(' + data[1].Substring(1).Trim() + ") ";
+                    data[1] = singer + data[2];
+                }
                 TimeSpan time = TimeSpan.ParseExact(data[0].Substring(1).Trim(), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
                 string lyric = data[1];
                 splitData.Add(time, lyric);
