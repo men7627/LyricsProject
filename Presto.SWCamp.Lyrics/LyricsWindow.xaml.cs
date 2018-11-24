@@ -18,7 +18,7 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
-        SortedList<TimeSpan, string> splitData; //파싱 데이터 
+        List<Tuple<TimeSpan, string>> splitData; //파싱 데이터 
         public LyricsWindow()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace Presto.SWCamp.Lyrics
         {
             //가사 초기화
             textLyrics.Text = null;
-            splitData = new SortedList<TimeSpan, string>();
+            splitData = new List<Tuple<TimeSpan, string>>();
             
             //lrc파일 경로 변경
             var fileName = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
@@ -53,7 +53,7 @@ namespace Presto.SWCamp.Lyrics
                 }
                 TimeSpan time = TimeSpan.ParseExact(data[0].Substring(1).Trim(), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
                 string lyric = data[1];
-                splitData.Add(time, lyric);
+                splitData.Add(new Tuple<TimeSpan, string>(time, lyric));
             }
             //노래 재생시간 타이머
             var timer = new DispatcherTimer
@@ -69,21 +69,21 @@ namespace Presto.SWCamp.Lyrics
             for (int i = 0; i < splitData.Count(); i++)
             {
                 var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
-                if(cur < splitData.Keys[0]) //첫 소절 나오기 전 간주 시간 공백 처리
+                if(cur < splitData[i].Item1) //첫 소절 나오기 전 간주 시간 공백 처리
                 {
                     textLyrics.Text = " ";
                     break;
                 }
-                else if (cur >= splitData.Keys[splitData.Count() - 1]) //마지막 가사 출력 (인덱스 오류 방지)
+                else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                 {
-                    textLyrics.Text = splitData.Values[splitData.Count() - 1];
+                    textLyrics.Text = splitData[splitData.Count() - 1].Item2;
                     break;
                 }
-                else if (cur >= splitData.Keys[i] && cur < splitData.Keys[i + 1]) //일반 가사 출력
+                else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
                 {
-                    if (splitData.Values[i] != null)
+                    if (splitData[i].Item2 != null)
                     {
-                        textLyrics.Text = splitData.Values[i];  
+                        textLyrics.Text = splitData[i].Item2;  
                         break;
                     }
                 }
