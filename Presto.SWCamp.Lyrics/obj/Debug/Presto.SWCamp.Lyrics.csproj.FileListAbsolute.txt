@@ -12,3 +12,15 @@ C:\Users\Admin\Downloads\Presto.Lyrics.Sample\Presto.SWCamp.Lyrics\Presto.SWCamp
 C:\Users\Admin\Downloads\Presto.Lyrics.Sample\Presto.SWCamp.Lyrics\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.dll
 C:\Users\Admin\Downloads\Presto.Lyrics.Sample\Presto.SWCamp.Lyrics\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.pdb
 C:\Users\Admin\Downloads\Presto.Lyrics.Sample\Presto.SWCamp.Lyrics\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.csprojResolveAssemblyReference.cache
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\Presto.SWCamp.Lyrics.dll
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\Presto.SWCamp.Lyrics.pdb
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\Presto.SDK.xml
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.csprojResolveAssemblyReference.cache
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\LyricsWindow.baml
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\LyricsWindow.g.cs
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics_MarkupCompile.cache
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.g.resources
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.Properties.Resources.resources
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.csproj.GenerateResource.Cache
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.dll
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.pdb

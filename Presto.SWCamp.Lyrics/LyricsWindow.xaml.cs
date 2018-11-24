@@ -18,12 +18,11 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
-        string[][] splitData;  //파싱 데이터 
-        TimeSpan[] time;       //파싱 데이터 시간 값
+        SortedList<TimeSpan, string> splitData; //파싱 데이터 
         public LyricsWindow()
         {
             InitializeComponent();
-            //스티림이 바뀌었을 때의 이벤트 함수
+            //스트림이 바뀌었을 때의 이벤트 함수
             PrestoSDK.PrestoService.Player.StreamChanged += Player_StreamChanged;
         }
 
@@ -31,8 +30,8 @@ namespace Presto.SWCamp.Lyrics
         {
             //가사 초기화
             textLyrics.Text = null;
-            splitData = new string[300][];
-            time = new TimeSpan[300];
+            splitData = new SortedList<TimeSpan, string>();
+            
             //lrc파일 경로 변경
             var fileName = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             var lrcName = Path.GetFileNameWithoutExtension(fileName) + ".lrc";
@@ -41,8 +40,11 @@ namespace Presto.SWCamp.Lyrics
             //가사 데이터 읽어 오기
             for (int i = 3; i < lines.Length; i++)
             {
-                splitData[i] = lines[i].Split(']');
-                time[i] = TimeSpan.ParseExact(splitData[i][0].Substring(1).Trim(), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
+                string[] data = new string[2];
+                data = lines[i].Split(']');
+                TimeSpan time = TimeSpan.ParseExact(data[0].Substring(1).Trim(), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
+                string lyric = data[1];
+                splitData.Add(time, lyric);
             }
             //노래 재생시간 타이머
             var timer = new DispatcherTimer
@@ -55,18 +57,28 @@ namespace Presto.SWCamp.Lyrics
         private void Timer_Tick(object sender, EventArgs e)
         {
             //가사 변경 범위 조정
-            for (int i = 0; i < splitData.Length; i++)
+            for (int i = 0; i < splitData.Count(); i++)
             {
                 var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
-                if (cur >= time[i] && cur < time[i + 1])
+                if(cur < splitData.Keys[0]) //첫 소절 나오기 전 간주 시간 공백 처리
                 {
-                    var data = splitData[i];
-                    if (data != null)
+                    textLyrics.Text = " ";
+                    break;
+                }
+                else if (cur >= splitData.Keys[splitData.Count() - 1]) //마지막 가사 출력 (인덱스 오류 방지)
+                {
+                    textLyrics.Text = splitData.Values[splitData.Count() - 1];
+                    break;
+                }
+                else if (cur >= splitData.Keys[i] && cur < splitData.Keys[i + 1]) //일반 가사 출력
+                {
+                    if (splitData.Values[i] != null)
                     {
-                        textLyrics.Text = splitData[i][1];
+                        textLyrics.Text = splitData.Values[i];  
+                        break;
                     }
                 }
-                if (i == 298) break;
+                
             }
         }
     }
