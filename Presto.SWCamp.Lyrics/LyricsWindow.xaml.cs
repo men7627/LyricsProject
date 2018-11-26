@@ -81,9 +81,8 @@ namespace Presto.SWCamp.Lyrics
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            for(int i = 3; i < tb.Length; i++)
+            for (int i = 3; i < tb.Length; i++)//모든 가사 배경 흰색
             {
-                
                 tb[i].Background = Brushes.White;
             }
             //가사 변경 범위 조정
@@ -98,8 +97,7 @@ namespace Presto.SWCamp.Lyrics
                 else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                 {
                     //textLyrics.Text = splitData[splitData.Count() - 1].Item2;
-                    tb[i + 2].Background = Brushes.White;
-                    tb[i + 3].Background = Brushes.Green;
+                    tb[splitData.Count()+2].Background = Brushes.Green;
                     break;
                 }
                 else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
@@ -107,17 +105,12 @@ namespace Presto.SWCamp.Lyrics
                     if (splitData[i].Item2 != null)
                     {
                         //textLyrics.Text = splitData[i].Item2;
-                        if (tb[i + 3] != null)
-                        {
-                            if (i > 0)
-                                tb[i + 2].Background = Brushes.White;
-                            tb[i + 3].Background = Brushes.Green;
-                        }
-                        break;
+                        tb[i + 3].Background = Brushes.Green;
                     }
+                    break;
                 }
-
             }
         }
     }
 }
+
