@@ -100,7 +100,7 @@ namespace Presto.SWCamp.Lyrics
                     {
                         if (splitData[j].Item1 == splitData[splitData.Count() - 1].Item1) //마지막 가사의 시간 대의 모든 가사
                         {
-                            tb[j+3].Background = Brushes.Green;
+                            tb[j+3].Background = Brushes.LimeGreen;
                         }
                     }
                     
@@ -114,7 +114,7 @@ namespace Presto.SWCamp.Lyrics
                         {
                             if (splitData[j].Item1 == splitData[i].Item1) //현재 시간 대의 모든 가사
                             {
-                                tb[j + 3].Background = Brushes.Green;
+                                tb[j + 3].Background = Brushes.LimeGreen;
                             }
                         }
                     }
