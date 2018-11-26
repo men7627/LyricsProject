@@ -6,12 +6,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ps="clr-namespace:Presto.SDK;assembly=Presto.SDK"
     Title="플레이어 가사 창"
-    Width="600"
-    Height="400"
+    Width="963.2"
+    Height="559.2"
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel VerticalAlignment="Center" Margin="0,107,-0.4,210.4" Height="53">
+        <StackPanel Margin="0,0,-0.4,292.4" Panel.ZIndex="1" >
+            <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="830,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click" Panel.ZIndex="-1"/>
+            <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="830,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click" Panel.ZIndex="-1"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" Margin="0,45,-0.4,272.4" Height="53">
             <TextBlock x:Name="textTitle"
             FontSize="14"
             Text="{Binding Player.CurrentMusic.Title}"
@@ -20,15 +24,11 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
             <StackPanel VerticalAlignment="Center" x:Name="LyricPanel">
-
-
                 <TextBlock x:Name="textLyrics"
             FontSize="24"
             Text="가사가 여기에 표시됩니다."
             TextAlignment="Center" />
             </StackPanel>
         </ScrollViewer>
-        <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="402,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click"/>
-        <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="498,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click"/>
     </Grid>
 </Window>

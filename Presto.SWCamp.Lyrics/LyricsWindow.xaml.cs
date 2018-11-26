@@ -96,34 +96,49 @@ namespace Presto.SWCamp.Lyrics
         private void oneLineAction()
         {
             LyricPanel.Children.Clear(); //패널 초기화
-            one = new TextBox();
-            one.BorderBrush = Brushes.White;
-            one.FontSize = 24;
-            one.Foreground = Brushes.Green;
-            one.TextAlignment = System.Windows.TextAlignment.Center;
             for (int i = 0; i < splitData.Count(); i++)
             {
                 var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
                 if (cur < splitData[i].Item1) //첫 소절 나오기 전 간주 시간 공백 처리
                 {
+                    one = new TextBox();
                     one.Text = " ";
                     LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
                     break;
                 }
                 else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                 {
-                    one.Text = splitData[splitData.Count() - 1].Item2;
-                    LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                    for (int j = 0; j <= splitData.Count() - 1; j++)
+                    {
+                        if (splitData[j].Item1 == splitData[splitData.Count() - 1].Item1) //마지막 가사의 시간 대의 모든 가사
+                        {
+                            one = new TextBox();                      //텍스트 박스 생성
+                            one.BorderBrush = Brushes.White;
+                            one.FontSize = 24;
+                            one.Foreground = Brushes.Green;
+                            one.TextAlignment = System.Windows.TextAlignment.Center;
+                            one.Text = splitData[j].Item2;
+                            LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                        }
+                    }
                     break;
                 }
                 else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
                 {
-                    //if (splitData[i].Item2 != null)
-                    //{
-                    one.Text = splitData[i].Item2;
-                    LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                    for (int j = 0; j <= splitData.Count() - 1; j++)
+                    {
+                        if (splitData[j].Item1 == splitData[i].Item1) //현재 가사의 시간 대의 모든 가사
+                        {
+                            one = new TextBox();                      //텍스트 박스 생성
+                            one.BorderBrush = Brushes.White;
+                            one.FontSize = 24;
+                            one.Foreground = Brushes.Green;
+                            one.TextAlignment = System.Windows.TextAlignment.Center;
+                            one.Text = splitData[j].Item2;
+                            LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                        }
+                    }
                     break;
-                    //}
                 }
             }
         }
@@ -146,9 +161,8 @@ namespace Presto.SWCamp.Lyrics
                     {
                         if (splitData[j].Item1 == splitData[splitData.Count() - 1].Item1) //마지막 가사의 시간 대의 모든 가사
                         {
-                            tb[j + 3].Background = Brushes.LimeGreen;
+                            tb[j + 3].Background = Brushes.LimeGreen; //배경 색 변경
                         }
-                        break;
                     }
                 }
                 else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
@@ -159,23 +173,22 @@ namespace Presto.SWCamp.Lyrics
                         {
                             if (splitData[j].Item1 == splitData[i].Item1) //현재 시간 대의 모든 가사
                             {
-                                tb[j + 3].Background = Brushes.LimeGreen;
+                                tb[j + 3].Background = Brushes.LimeGreen; //배경 색 변경
                             }
-                            break;
                         }
                     }
                 }
             }
         }
         
-        private void oneLine_Click(object sender, RoutedEventArgs e)
+        private void oneLine_Click(object sender, RoutedEventArgs e) //한줄 출력 형식 버튼 클릭 시
         {
             if (allLineIsClicked == true)
                 allLineIsClicked = false;
             oneLineIsClicked = true;
         }
 
-        private void allLine_Click(object sender, RoutedEventArgs e)
+        private void allLine_Click(object sender, RoutedEventArgs e) //전체 출력 형식 버튼 클릭 시
         {
             if(oneLineIsClicked==true)
                 oneLineIsClicked = false;
