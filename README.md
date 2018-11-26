@@ -13,3 +13,13 @@
   * 브랜치로 빼서 가사 출력을 전체가사를 출력하고 재생되는 가사의 배경만 색을 바꾸는 식으로 수정
     - 스크롤 추가 
     - 마지막 가사 오류
+  * 마지막 가사 오류 수정
+    - (인덱스 수정)
+    - <code>
+      else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
+                  {
+                      //textLyrics.Text = splitData[splitData.Count() - 1].Item2;
+                      tb[splitData.Count()+2].Background = Brushes.Green;
+                      break;
+                  }
+      </code>
