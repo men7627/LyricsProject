@@ -97,17 +97,28 @@ namespace Presto.SWCamp.Lyrics
                 else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                 {
                     //textLyrics.Text = splitData[splitData.Count() - 1].Item2;
-                    tb[splitData.Count()+2].Background = Brushes.Green;
-                    break;
+                    for (int j = 0; j < splitData.Count() - 1; j++)
+                    {
+                        if (splitData[j].Item1 == splitData[i].Item1)
+                        {
+                            tb[splitData.Count() + 2].Background = Brushes.Green;
+                        }
+                    }
+                    
                 }
                 else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
                 {
-                    if (splitData[i].Item2 != null)
+                    if (splitData[i].Item2 != null )
                     {
                         //textLyrics.Text = splitData[i].Item2;
-                        tb[i + 3].Background = Brushes.Green;
+                        for(int j = 0; j < splitData.Count() - 1; j++)
+                        {
+                            if (splitData[j].Item1 == splitData[i].Item1)
+                            {
+                                tb[j + 3].Background = Brushes.Green;
+                            }
+                        }
                     }
-                    break;
                 }
             }
         }
