@@ -21,8 +21,12 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
+        bool oneLineIsClicked = false;
+        bool allLineIsClicked = false;
         TextBox[] tb;                            //가사 한줄 한줄의 배열
+        TextBox one;
         List<Tuple<TimeSpan, string>> splitData; //파싱 데이터 
+
         public LyricsWindow()
         {
             InitializeComponent();
@@ -31,7 +35,6 @@ namespace Presto.SWCamp.Lyrics
 
         private void Player_StreamChanged(object sender, Common.StreamChangedEventArgs e)
         {
-
             //가사 초기화
             //textLyrics.Text = null;
             LyricPanel.Children.Clear(); //패널 초기화
@@ -56,14 +59,12 @@ namespace Presto.SWCamp.Lyrics
                     data[1] = singer + data[1] + '\n';      //이전 파트를 붙임
                     //textLyrics.Text += data[1];
                     tb[i].Text = data[1];                   //가사 한줄(텍스트 박스)에 가사 데이터 지정
-                    LyricPanel.Children.Add(tb[i]);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
                 }
                 else if (data.Length == 3)           //파트 지정이 있는 부분
                 {
-                    singer = '(' + data[1].Substring(1).Trim() + ") "; 
+                    singer = '(' + data[1].Substring(1).Trim() + ") ";
                     data[1] = singer + data[2] + '\n';
                     tb[i].Text = data[1];
-                    LyricPanel.Children.Add(tb[i]);
                     //textLyrics.Text += data[1];
                 }
                 TimeSpan time = TimeSpan.ParseExact(data[0].Substring(1).Trim(), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
@@ -80,46 +81,105 @@ namespace Presto.SWCamp.Lyrics
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            for (int i = 3; i < tb.Length; i++)//모든 가사 배경 흰색
+            if (oneLineIsClicked == false && allLineIsClicked == false)
+                oneLineAction();
+            else if (oneLineIsClicked == true)
             {
-                tb[i].Background = Brushes.White;  
+                oneLineAction();
             }
-            //가사 변경 범위 조정
+            else if (allLineIsClicked == true)
+            {
+                allLineAction();
+            }
+        }
+
+        private void oneLineAction()
+        {
+            LyricPanel.Children.Clear(); //패널 초기화
+            one = new TextBox();
+            one.BorderBrush = Brushes.White;
+            one.FontSize = 24;
+            one.Foreground = Brushes.Green;
+            one.TextAlignment = System.Windows.TextAlignment.Center;
             for (int i = 0; i < splitData.Count(); i++)
             {
                 var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
                 if (cur < splitData[i].Item1) //첫 소절 나오기 전 간주 시간 공백 처리
                 {
-                    //textLyrics.Text = " ";
+                    one.Text = " ";
+                    LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
                     break;
                 }
                 else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                 {
-                    //textLyrics.Text = splitData[splitData.Count() - 1].Item2;
+                    one.Text = splitData[splitData.Count() - 1].Item2;
+                    LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                    break;
+                }
+                else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
+                {
+                    //if (splitData[i].Item2 != null)
+                    //{
+                    one.Text = splitData[i].Item2;
+                    LyricPanel.Children.Add(one);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                    break;
+                    //}
+                }
+            }
+        }
+
+        private void allLineAction()
+        {
+            LyricPanel.Children.Clear(); //패널 초기화
+            for (int i = 3; i < tb.Length; i++)
+            {
+                tb[i].Background = Brushes.White;       //모든 가사 배경 흰색
+                LyricPanel.Children.Add(tb[i]);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+            }
+            //가사 변경 범위 조정
+            for (int i = 0; i < splitData.Count(); i++)
+            {
+                var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
+                if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
+                {
                     for (int j = 0; j <= splitData.Count() - 1; j++)
                     {
                         if (splitData[j].Item1 == splitData[splitData.Count() - 1].Item1) //마지막 가사의 시간 대의 모든 가사
                         {
-                            tb[j+3].Background = Brushes.LimeGreen;
+                            tb[j + 3].Background = Brushes.LimeGreen;
                         }
+                        break;
                     }
-                    
                 }
                 else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
                 {
-                    if (splitData[i].Item2 != null )
+                    if (splitData[i].Item2 != null)
                     {
-                        //textLyrics.Text = splitData[i].Item2;
-                        for(int j = 0; j <= splitData.Count() - 1; j++) 
+                        for (int j = 0; j <= splitData.Count() - 1; j++)
                         {
                             if (splitData[j].Item1 == splitData[i].Item1) //현재 시간 대의 모든 가사
                             {
                                 tb[j + 3].Background = Brushes.LimeGreen;
                             }
+                            break;
                         }
                     }
                 }
             }
+        }
+        
+        private void oneLine_Click(object sender, RoutedEventArgs e)
+        {
+            if (allLineIsClicked == true)
+                allLineIsClicked = false;
+            oneLineIsClicked = true;
+        }
+
+        private void allLine_Click(object sender, RoutedEventArgs e)
+        {
+            if(oneLineIsClicked==true)
+                oneLineIsClicked = false;
+            allLineIsClicked = true;
         }
     }
 }
