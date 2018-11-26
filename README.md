@@ -15,11 +15,11 @@
     - 마지막 가사 오류
   * 마지막 가사 오류 수정
     - (인덱스 수정)
-    - <code>
+    - ~~~
       else if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                   {
                       //textLyrics.Text = splitData[splitData.Count() - 1].Item2;
                       tb[splitData.Count()+2].Background = Brushes.Green;
                       break;
                   }
-      </code>
+      ~~~
