@@ -11,7 +11,7 @@
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
     mc:Ignorable="d">
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
-        <StackPanel VerticalAlignment="Center">
+        <StackPanel VerticalAlignment="Center" x:Name="LyricPanel">
             <TextBlock x:Name="textTitle"
             FontSize="14"
             Text="{Binding Player.CurrentMusic.Title}"
