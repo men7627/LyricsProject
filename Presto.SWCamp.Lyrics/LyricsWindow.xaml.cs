@@ -1,7 +1,4 @@
-﻿/*
- * Desing Branch
- */
-using Presto.SDK;
+﻿using Presto.SDK;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,8 +18,9 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
-        bool oneLineIsClicked = false;
-        bool allLineIsClicked = false;
+        int allLineFontSize;                     //전체 가사 font size
+        bool oneLineIsClicked = false;           //1줄 가사 버튼 클릭 
+        bool allLineIsClicked = false;           //전체 가사 버튼 클릭
         TextBox[] tb;                            //가사 한줄 한줄의 배열
         TextBox one;
         List<Tuple<TimeSpan, string>> splitData; //파싱 데이터 
@@ -51,6 +49,7 @@ namespace Presto.SWCamp.Lyrics
             for (int i = 3; i < lines.Length; i++)
             {
                 tb[i] = new TextBox();               //가사 한줄 생성
+                tb[i].FontSize = 20;
                 tb[i].BorderBrush = Brushes.White;   //가사 한줄의 테두리 흰색 설정
 
                 string[] data = lines[i].Split(']'); //가사 한줄을 ']' 단위로 스플릿
@@ -58,6 +57,7 @@ namespace Presto.SWCamp.Lyrics
                 {
                     data[1] = singer + data[1] + '\n';      //이전 파트를 붙임
                     //textLyrics.Text += data[1];
+
                     tb[i].Text = data[1];                   //가사 한줄(텍스트 박스)에 가사 데이터 지정
                 }
                 else if (data.Length == 3)           //파트 지정이 있는 부분
@@ -79,15 +79,15 @@ namespace Presto.SWCamp.Lyrics
             timer.Tick += Timer_Tick;
             timer.Start();
         }
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e) //Timer 마다 실행 될 함수
         {
-            if (oneLineIsClicked == false && allLineIsClicked == false)
+            if (oneLineIsClicked == false && allLineIsClicked == false) // Default
                 oneLineAction();
-            else if (oneLineIsClicked == true)
+            else if (oneLineIsClicked == true) //oneLine 출력 모드
             {
                 oneLineAction();
             }
-            else if (allLineIsClicked == true)
+            else if (allLineIsClicked == true) //allLine 출력 모드
             {
                 allLineAction();
             }
@@ -131,7 +131,7 @@ namespace Presto.SWCamp.Lyrics
                         {
                             one = new TextBox();                      //텍스트 박스 생성
                             one.BorderBrush = Brushes.White;
-                            one.FontSize = 24;
+                            one.FontSize = 29;
                             one.Foreground = Brushes.Green;
                             one.TextAlignment = System.Windows.TextAlignment.Center;
                             one.Text = splitData[j].Item2;
@@ -146,10 +146,13 @@ namespace Presto.SWCamp.Lyrics
         private void allLineAction()
         {
             LyricPanel.Children.Clear(); //패널 초기화
-            for (int i = 3; i < tb.Length; i++)
+            for (int i = 3; i < tb.Length; i++) //전체 가사 생성
             {
+                tb[i].TextAlignment = System.Windows.TextAlignment.Center;
                 tb[i].Background = Brushes.White;       //모든 가사 배경 흰색
+                tb[i].FontSize = allLineFontSize;       //slider의 값에 따라 fontSize 변경
                 LyricPanel.Children.Add(tb[i]);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
+                //[i].MouseLeftButtonDown += click_lyric;
             }
             //가사 변경 범위 조정
             for (int i = 0; i < splitData.Count(); i++)
@@ -194,6 +197,16 @@ namespace Presto.SWCamp.Lyrics
                 oneLineIsClicked = false;
             allLineIsClicked = true;
         }
+        //private void click_lyric(object sender, RoutedEventArgs e)
+        //{
+        //    MessageBox.Show("asda");
+        //}
+
+        private void fontSizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) // slider event를 통해 allLine 가사 출력 모드에서 fontSize 조절
+        {
+            allLineFontSize = (int)fontSizeSlider.Value;
+        }
     }
+    
 }
 
