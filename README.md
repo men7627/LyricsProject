@@ -47,3 +47,7 @@
   * oneLine 출력 모드 / allLine 출력 모드 모두 완료
    - oneLine 모드에서 J-POP, POP SONG 등 2줄 이상의 가사 오류 해결
    - Windows 창 크기 조절
+  * Slider를 통해 allLine 가사 출력 모드에서 fontSize 동적으로 조절
+   - int allLineFontSize 변수 선언 
+   - slider 이벤트가 발생할 때 마다 allLineFontSize 변수 값을 slider의 Value 값으 변경
+   - allLineFontSize 가사 한줄 생성 시 마다 fontSize에 설정
