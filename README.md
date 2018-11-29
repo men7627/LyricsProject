@@ -62,4 +62,13 @@
     - 곡 정보로 가수, 곡명, 앨범을 출력
     - MessageBox.Show 를 통해 출력
     - 곡이 선택 되지 않았을 때는 에러 메세지 출력 (예외 처리)
- 
+  * 자료구조 변경
+    - 한줄의 가사 TextBox로 되어 있던 변수들을 TextBlock으로 수정
+    - TextBox는 Hover 시 쓸 때 없는 Border 가 생겨서 TextBlock 으로 수정
+
+  * UI Design
+    - allLine 가사 모드 시 제목 출력 Collapsed 시키고 oneLine 가사 출력 시 제목 출력 visible 시킴
+    - Color Design
+    - Font Design
+    - Layout Design
+    - Stream이 바뀔 때마다 가사 윈도우 창 맨 앞으로 가져오기
