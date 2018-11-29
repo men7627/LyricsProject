@@ -51,3 +51,11 @@
    - int allLineFontSize 변수 선언 
    - slider 이벤트가 발생할 때 마다 allLineFontSize 변수 값을 slider의 Value 값으 변경
    - allLineFontSize 가사 한줄 생성 시 마다 fontSize에 설정
+        -------------------------------------------------------------------------------------
+      ### 2018-11-27
+  * 전체 가사 출력 모드에서 재생하고자 하는 가사를 클릭 하면 재생위치를 클릭한 부분으로 변경하는 기능 추가
+   - 각 텍스트 박스마다 PreviewMouseLeftButtonDown 이벤트 추가
+   - 어떤 텍스트 박스에서 이벤트가 걸렸는지 알기 위해 텍스트 박스마다 인덱스를 포함해 Name 지정
+   - 이벤트 함수에서 지정 된 이름을 통해 이벤트가 걸린 텍스트 박스를 불러옴
+   - 이벤트가 걸린 텍스트 박스에 지정 된 재생시간으로  PrestoSDK.PrestoService.Player.Position(현재 재생 위치) 값 변경
+ 
