@@ -13,8 +13,9 @@
     <Grid>
         <TextBox></TextBox>
         <StackPanel Margin="0,0,-0.4,292.4" Panel.ZIndex="1" >
-            <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="830,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click" Panel.ZIndex="-1"/>
-            <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="830,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click" Panel.ZIndex="-1"/>
+            <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click" Panel.ZIndex="-1"/>
+            <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click" Panel.ZIndex="-1"/>
+            <Button x:Name="info" Content="info" Margin="820,10,51.8,0" Width="75" Click="info_Click" Panel.ZIndex="-1"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Slider x:Name="fontSizeSlider" Margin="794,15,21.8,0" SmallChange="1" Maximum="26" Minimum="10" Value="14" ValueChanged="fontSizeSlider_ValueChanged" />
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Margin="0,61,-0.2,415.6" Height="53" >

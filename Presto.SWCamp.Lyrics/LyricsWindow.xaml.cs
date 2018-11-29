@@ -18,6 +18,7 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
+        string songInfo = " ";                             //곡 정보를 저장할 변순        
         TimeSpan cur;                            //현재 시간 저장할 변수
         int allLineFontSize;                     //전체 가사 font size
         bool oneLineIsClicked = false;           //1줄 가사 버튼 클릭 
@@ -38,6 +39,7 @@ namespace Presto.SWCamp.Lyrics
             //textLyrics.Text = null;
             LyricPanel.Children.Clear(); //패널 초기화
             splitData = new List<Tuple<TimeSpan, string>>(); //파싱 데이터 리스트 초기화
+            songInfo = " ";                               //곡 정보 초기화
 
             //lrc파일 경로 변경
             var fileName = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
@@ -48,6 +50,12 @@ namespace Presto.SWCamp.Lyrics
             var lines = File.ReadAllLines(path);     
             string singer = null;                    //파트 저장할 변수 
             tb = new TextBox[lines.Length];          //가사 한줄 한줄의 배열 생성
+
+            //곡 정보 저장
+            songInfo += "가수 : " + (lines[0].Substring(4)).Split(']').First() + '\n';
+            songInfo += "제목 : " + (lines[1].Substring(4)).Split(']').First() + '\n';
+            songInfo += "앨범 : " + (lines[2].Substring(4)).Split(']').First() + '\n';
+
             for (int i = 3; i < lines.Length; i++)
             {
                 tb[i] = new TextBox();               //가사 한줄 생성
@@ -238,6 +246,14 @@ namespace Presto.SWCamp.Lyrics
         private void fontSizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) // slider event를 통해 allLine 가사 출력 모드에서 fontSize 조절
         {
             allLineFontSize = (int)fontSizeSlider.Value;
+        }
+
+        private void info_Click(object sender, RoutedEventArgs e) //곡 정보를 출력하는 이벤트 함수
+        {
+            if (allLineIsClicked == false && oneLineIsClicked == false) // 곡이 재생 중이지 않을 때 예외처리
+                MessageBox.Show("재생 중인 곡이 없습니다.");
+            else
+                MessageBox.Show(songInfo);
         }
     }
 }
