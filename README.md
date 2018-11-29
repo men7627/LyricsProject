@@ -57,5 +57,5 @@
    - 각 텍스트 박스마다 PreviewMouseLeftButtonDown 이벤트 추가
    - 어떤 텍스트 박스에서 이벤트가 걸렸는지 알기 위해 텍스트 박스마다 인덱스를 포함해 Name 지정
    - 이벤트 함수에서 지정 된 이름을 통해 이벤트가 걸린 텍스트 박스를 불러옴
-   - 이벤트가 걸린 텍스트 박스에 지정 된 재생시간으로  PrestoSDK.PrestoService.Player.Position(현재 재생 위치) 값 변경
+   - 이벤트가 걸린 텍스트 박스에 지정 된 재생시간으로  PrestoSDK.PrestoService.Player.Position(현재 재생 위치) 값 변경 
  
