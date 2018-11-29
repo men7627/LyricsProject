@@ -11,6 +11,7 @@
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
     mc:Ignorable="d">
     <Grid>
+        <TextBox></TextBox>
         <StackPanel Margin="0,0,-0.4,292.4" Panel.ZIndex="1" >
             <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="830,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click" Panel.ZIndex="-1"/>
             <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="830,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click" Panel.ZIndex="-1"/>

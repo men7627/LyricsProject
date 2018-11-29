@@ -18,11 +18,12 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
+        TimeSpan cur;                            //현재 시간 저장할 변수
         int allLineFontSize;                     //전체 가사 font size
         bool oneLineIsClicked = false;           //1줄 가사 버튼 클릭 
         bool allLineIsClicked = false;           //전체 가사 버튼 클릭
         TextBox[] tb;                            //가사 한줄 한줄의 배열
-        TextBox one;
+        TextBox one;                             //한줄 가사 모드에서의 현재 재생가사 변수
         List<Tuple<TimeSpan, string>> splitData; //파싱 데이터 
 
         public LyricsWindow()
@@ -42,8 +43,9 @@ namespace Presto.SWCamp.Lyrics
             var fileName = PrestoSDK.PrestoService.Player.CurrentMusic.Path;
             var lrcName = Path.GetFileNameWithoutExtension(fileName) + ".lrc";
             var path = Path.Combine(Path.GetDirectoryName(fileName), lrcName);
-            var lines = File.ReadAllLines(path);
+
             //가사 데이터 읽어 오기
+            var lines = File.ReadAllLines(path);     
             string singer = null;                    //파트 저장할 변수 
             tb = new TextBox[lines.Length];          //가사 한줄 한줄의 배열 생성
             for (int i = 3; i < lines.Length; i++)
@@ -65,12 +67,12 @@ namespace Presto.SWCamp.Lyrics
                     singer = '(' + data[1].Substring(1).Trim() + ") ";
                     data[1] = singer + data[2] + '\n';
                     tb[i].Text = data[1];
-                    //textLyrics.Text += data[1];
                 }
                 TimeSpan time = TimeSpan.ParseExact(data[0].Substring(1).Trim(), @"mm\:ss\.ff", CultureInfo.InvariantCulture);
                 string lyric = data[1];
                 splitData.Add(new Tuple<TimeSpan, string>(time, lyric));
             }
+
             //노래 재생시간 타이머
             var timer = new DispatcherTimer
             {
@@ -98,7 +100,7 @@ namespace Presto.SWCamp.Lyrics
             LyricPanel.Children.Clear(); //패널 초기화
             for (int i = 0; i < splitData.Count(); i++)
             {
-                var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
+                cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position); //현재 재생 되는 위치
                 if (cur < splitData[i].Item1) //첫 소절 나오기 전 간주 시간 공백 처리
                 {
                     one = new TextBox();
@@ -148,16 +150,17 @@ namespace Presto.SWCamp.Lyrics
             LyricPanel.Children.Clear(); //패널 초기화
             for (int i = 3; i < tb.Length; i++) //전체 가사 생성
             {
+                tb[i].Name = 't' + i.ToString();        //인덱스에 따라 이름 지정 -> 몇 번째 텍스트 박스가 클릭 됐는지 알기 위해
                 tb[i].TextAlignment = System.Windows.TextAlignment.Center;
                 tb[i].Background = Brushes.White;       //모든 가사 배경 흰색
                 tb[i].FontSize = allLineFontSize;       //slider의 값에 따라 fontSize 변경
                 LyricPanel.Children.Add(tb[i]);         //패널의 자식으로 가사 한줄 (텍스트 박스)를 지정
-                //[i].MouseLeftButtonDown += click_lyric;
+                tb[i].PreviewMouseLeftButtonDown += click_lyric;
             }
             //가사 변경 범위 조정
             for (int i = 0; i < splitData.Count(); i++)
             {
-                var cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
+                cur = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
                 if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
                 {
                     for (int j = 0; j <= splitData.Count() - 1; j++)
@@ -197,16 +200,45 @@ namespace Presto.SWCamp.Lyrics
                 oneLineIsClicked = false;
             allLineIsClicked = true;
         }
-        //private void click_lyric(object sender, RoutedEventArgs e)
-        //{
-        //    MessageBox.Show("asda");
-        //}
+
+        private void click_lyric(object sender, RoutedEventArgs e) //텍스트 박스 클릭 이벤트
+        {
+            TextBox m = e.Source as TextBox;                       //이벤트가 걸린 텍스트 박스를 가져옴
+            int index = int.Parse(m.Name.Substring(1).ToString()); //텍스트 박스 Name을 통해 몇번째인지 인덱스 지정
+            PrestoSDK.PrestoService.Player.Position = double.Parse(splitData[index-3].Item1.TotalMilliseconds.ToString()); //클릭 된 텍스트 박스에 지정 된 시간으로 현재 재생 위치 변경
+            
+            for (int i = 0; i < splitData.Count(); i++)
+            {
+                if (cur >= splitData[splitData.Count() - 1].Item1) //마지막 가사 출력 (인덱스 오류 방지)
+                {
+                    for (int j = 0; j <= splitData.Count() - 1; j++)
+                    {
+                        if (splitData[j].Item1 == splitData[splitData.Count() - 1].Item1) //마지막 가사의 시간 대의 모든 가사
+                        {
+                            tb[j + 3].Background = Brushes.LimeGreen; //배경 색 변경
+                        }
+                    }
+                }
+                else if (cur >= splitData[i].Item1 && cur < splitData[i + 1].Item1) //일반 가사 출력
+                {
+                    if (splitData[i].Item2 != null)
+                    {
+                        for (int j = 0; j <= splitData.Count() - 1; j++)
+                        {
+                            if (splitData[j].Item1 == splitData[i].Item1) //현재 시간 대의 모든 가사
+                            {
+                                tb[j + 3].Background = Brushes.LimeGreen; //배경 색 변경
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         private void fontSizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) // slider event를 통해 allLine 가사 출력 모드에서 fontSize 조절
         {
             allLineFontSize = (int)fontSizeSlider.Value;
         }
     }
-    
 }
 
