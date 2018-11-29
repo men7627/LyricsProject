@@ -10,28 +10,28 @@
     Height="559.2"
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Color x:Key="gr">#FF716B6B</Color>
+    </Window.Resources>
     <Grid>
-        <TextBox></TextBox>
-        <StackPanel Margin="0,0,-0.4,292.4" Panel.ZIndex="1" >
-            <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click" Panel.ZIndex="-1"/>
-            <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click" Panel.ZIndex="-1"/>
-            <Button x:Name="info" Content="info" Margin="820,10,51.8,0" Width="75" Click="info_Click" Panel.ZIndex="-1"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Slider x:Name="fontSizeSlider" Margin="794,15,21.8,0" SmallChange="1" Maximum="26" Minimum="10" Value="14" ValueChanged="fontSizeSlider_ValueChanged" />
+        <StackPanel Margin="0,0,-0.2,401.6" Panel.ZIndex="1" >
+            <Button x:Name="oneLine" Content="oneLine" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.178,-2.062" Click="oneLine_Click" Panel.ZIndex="-1" FontFamily="Headline R" FontStretch="Condensed" BorderBrush="White" Foreground="White" Background="#FF168930" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"/>
+            <Button x:Name="allLine" Content="allLine" HorizontalAlignment="Left" Margin="820,10,0,0" VerticalAlignment="Top" Width="75" Click="allLine_Click" Panel.ZIndex="-1" FontFamily="Headline R" FontStretch="Condensed" BorderBrush="White" Foreground="White" Background="#FF168930" Cursor="Hand"/>
+            <Button x:Name="info" Content="info" Margin="820,10,51.8,0" Width="75" Click="info_Click" Panel.ZIndex="-1"  HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Headline R" FontStretch="Condensed" BorderBrush="White" Foreground="White" Background="#FF168930" Cursor="Hand"/>
+            <Slider x:Name="fontSizeSlider" Margin="794,15,21.8,0" SmallChange="1" Maximum="26" Minimum="10" Value="14" ValueChanged="fontSizeSlider_ValueChanged" Height="29" Cursor="Hand" />
         </StackPanel>
-        <StackPanel VerticalAlignment="Center" Margin="0,61,-0.2,415.6" Height="53" >
-            <TextBlock x:Name="textTitle"
-            FontWeight="Bold"
+        <StackPanel VerticalAlignment="Center" Margin="0,133,-0.2,343.6" Height="53" Panel.ZIndex="4" >
+            <TextBlock x:Name="textTitle" FontFamily="Headline R" Foreground="White" Text="{Binding Player.CurrentMusic.Title}" Padding="15,15,0,0"
+            FontWeight="Thin"
             FontSize="18"
-            Text="{Binding Player.CurrentMusic.Title}"
-            TextAlignment="Center" Height="48" Margin="0,0,-0.4,0" RenderTransformOrigin="0.502,0.963" />
+            TextAlignment="Center" Height="67" Margin="0,0,18.8,0" RenderTransformOrigin="0.502,0.963" Background="Gray"/>
         </StackPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-
-            <StackPanel VerticalAlignment="Center" x:Name="LyricPanel">
-                <TextBlock x:Name="textLyrics"
-            FontSize="14"
-            Text="가사가 여기에 표시됩니다."
-            TextAlignment="Center" />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Foreground="Black" FontFamily="Headline R" Background="Gray">
+            <StackPanel VerticalAlignment="Center" x:Name="LyricPanel" Panel.ZIndex="4">
+                <TextBlock x:Name="textLyrics" FontFamily="Headline R"
+            FontSize="26"
+            Text="HyogeonLyricsProgram"
+            TextAlignment="Center" Foreground="White" Cursor="None" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
