@@ -31,6 +31,8 @@
    ![player](./Presto.SWCamp.Lyrics/image/d.PNG)
    ![player](./Presto.SWCamp.Lyrics/image/w.PNG)
    ![player](./Presto.SWCamp.Lyrics/image/여행.PNG)
+   * 전체 가사 출력 모드 시 가사를 클릭하면 해당 가사로 재생 시점이 이동한다.
+   * Player에서 재생 시점을 변경하면 가사 위치도 변경 된다.
    
  ----------------------------------------------------------------------------------------------
 # 일별 진척 사항
