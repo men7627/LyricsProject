@@ -56,6 +56,17 @@
                 <TextBlock x:Name="textTitle" Text="{Binding Player.CurrentMusic.Title}" HorizontalAlignment="Center" Foreground="LightSteelBlue" Margin="0,17"/>
 
             </StackPanel>
+            <Button HorizontalAlignment="Right" Width="40" Margin="0,5,60,0" Style="{ StaticResource MaterialDesignFloatingActionMiniAccentButton }" Background="{x:Null}" VerticalAlignment="Top" Click="clickInfo" Cursor="Hand" ToolTip="곡 정보" Grid.Column="1">
+                <materialDesign:PackIcon Kind="InfoOutline" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FFD69016"/>
+                            <GradientStop Color="#FFD6511E" Offset="0.747"/>
+                            <GradientStop Color="#FF9B330D" Offset="0.807"/>
+                        </LinearGradientBrush>
+                    </materialDesign:PackIcon.Foreground>
+                </materialDesign:PackIcon>
+            </Button>
             <Button HorizontalAlignment="Right" Width="40" Margin="0,5,9.6,0" Style="{ StaticResource MaterialDesignFloatingActionMiniAccentButton }" Background="{x:Null}" VerticalAlignment="Top" Click="exitButton" Cursor="Hand" ToolTip="종료" Grid.Column="1">
                 <materialDesign:PackIcon Kind="Power" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <materialDesign:PackIcon.Foreground>

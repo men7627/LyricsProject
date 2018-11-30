@@ -318,5 +318,10 @@ namespace Presto.SWCamp.Lyrics
             else
                 allLineFontSize--;
         }
+
+        private void clickInfo(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(songInfo);
+        }
     }
 }
