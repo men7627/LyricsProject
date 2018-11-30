@@ -1,6 +1,6 @@
 ## 김효건 LyricsProject
  ----------------------------------------------------------------------------------------------
-# 프로젝트 소개
+# 프로젝트 소개 <br>
 ![player](./Presto.SWCamp.Lyrics/image/player.PNG)
 ### UI 소개
 #### Material Design Package를 활용하여 깔끔하고 세련 된 디자인
@@ -19,15 +19,15 @@
 
 ### 기능 소개
    * 플레이어 싱행 후 노래를 재생 시키면 Default로 싱크에 맞게 한 줄 가사 출력
-   * part가 있는 노래의 경우 텍스트를 재구성 하여 모든 가사에 파트 지정해 출력
+   * part가 있는 노래의 경우 텍스트를 재구성 하여 모든 가사에 파트 지정해 출력<br>
    ![player](./Presto.SWCamp.Lyrics/image/part.PNG)
-   * 외국 노래의 경우 같은 시간 대에 번역 등 여러줄 한번에 출력 (2줄,3줄,4줄, ... 모두 가능)
+   * 외국 노래의 경우 같은 시간 대에 번역 등 여러줄 한번에 출력 (2줄,3줄,4줄, ... 모두 가능)<br>
    ![player](./Presto.SWCamp.Lyrics/image/3.PNG)
    ![player](./Presto.SWCamp.Lyrics/image/32.PNG)
-   * 한줄 가사 모드와 전체 가사 모두 자유롭게 선택 가능
+   * 한줄 가사 모드와 전체 가사 모두 자유롭게 선택 가능<br>
    ![player](./Presto.SWCamp.Lyrics/image/1줄.PNG)
    ![player](./Presto.SWCamp.Lyrics/image/전체.PNG)
-   * 현재 재생 되는 곡에 맞게 album 이미지가 변경 됨
+   * 현재 재생 되는 곡에 맞게 album 이미지가 변경 됨<br>
    ![player](./Presto.SWCamp.Lyrics/image/d.PNG)
    ![player](./Presto.SWCamp.Lyrics/image/w.PNG)
    ![player](./Presto.SWCamp.Lyrics/image/여행.PNG)
