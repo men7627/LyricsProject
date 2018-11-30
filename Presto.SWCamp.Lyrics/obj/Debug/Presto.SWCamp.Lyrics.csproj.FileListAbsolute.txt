@@ -24,3 +24,7 @@ C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics
 C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.csproj.GenerateResource.Cache
 C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.dll
 C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\obj\Debug\Presto.SWCamp.Lyrics.pdb
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\MaterialDesignColors.dll
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\Admin\LyricsProject\Presto.SWCamp.Lyrics\bin\Debug\MaterialDesignThemes.Wpf.xml
