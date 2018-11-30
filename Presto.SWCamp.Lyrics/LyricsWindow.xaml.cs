@@ -18,6 +18,10 @@ namespace Presto.SWCamp.Lyrics
 {
     public partial class LyricsWindow : Window
     {
+        bool repeatIsClicked = false;
+        bool repeatStart = false;
+        bool repeatComplete = false;
+        TimeSpan rs, re;
         bool pauseIsClicked = false;              //일시정지 버튼 
         bool starting = false;                    //프로그램 시작
         string songInfo = " ";                    //곡 정보를 저장할 변순        
@@ -52,14 +56,14 @@ namespace Presto.SWCamp.Lyrics
             var lrcName = Path.GetFileNameWithoutExtension(fileName) + ".lrc";
             //Image 파일 변경
             String imgPath = "C:\\Users\\Admin\\LyricsProject\\Presto.SWCamp.Lyrics\\" + "Assets\\" + Path.GetFileNameWithoutExtension(fileName) + ".jpg";
-            Uri imageUri = new Uri(imgPath,UriKind.Absolute);
+            Uri imageUri = new Uri(imgPath, UriKind.Absolute);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
             Image myImage = new Image();
             myImage.Source = imageBitmap;
             songImg.ImageSource = myImage.Source;
             var path = Path.Combine(Path.GetDirectoryName(fileName), lrcName);
 
-             
+
 
             //가사 데이터 읽어 오기
             var lines = File.ReadAllLines(path);
@@ -74,7 +78,7 @@ namespace Presto.SWCamp.Lyrics
             for (int i = 3; i < lines.Length; i++)
             {
                 tb[i] = new TextBlock();               //가사 한줄 생성
-                
+
                 string[] data = lines[i].Split(']'); //가사 한줄을 ']' 단위로 스플릿
 
                 if (data.Length == 2)                //파트 지정이 없는 부분
@@ -234,6 +238,29 @@ namespace Presto.SWCamp.Lyrics
         {
             TextBlock m = e.Source as TextBlock;                       //이벤트가 걸린 텍스트 박스를 가져옴
             int index = int.Parse(m.Name.Substring(1).ToString()); //텍스트 박스 Name을 통해 몇번째인지 인덱스 지정
+
+            if (repeatIsClicked == true && repeatStart == false)
+            {
+                rs = splitData[index - 3].Item1;
+                repeatStart = true;
+                goto c;
+            }
+
+            if (repeatIsClicked == true && repeatStart == true)
+            {
+                re = splitData[index - 3].Item1;
+                if (re == rs)
+                    goto o;
+                repeatComplete = true;
+                j:
+                PrestoSDK.PrestoService.Player.Position = double.Parse(rs.TotalMilliseconds.ToString());
+                if (repeatComplete == false && repeatStart == false && repeatIsClicked)
+                    goto o;
+                else if (PrestoSDK.PrestoService.Player.Position <= double.Parse(re.TotalMilliseconds.ToString()))
+                    goto j;
+                o:;
+            }
+            c:
             PrestoSDK.PrestoService.Player.Position = double.Parse(splitData[index - 3].Item1.TotalMilliseconds.ToString()); //클릭 된 텍스트 박스에 지정 된 시간으로 현재 재생 위치 변경
 
             for (int i = 0; i < splitData.Count(); i++)
@@ -280,7 +307,7 @@ namespace Presto.SWCamp.Lyrics
 
         private void Button_Click(object sender, RoutedEventArgs e)    //일시정지 버튼
         {
-            if(pauseIsClicked == false)
+            if (pauseIsClicked == false)
             {
                 PrestoSDK.PrestoService.Player.Pause();                //재생 중일 때는 정지
                 pauseIsClicked = true;
@@ -308,7 +335,7 @@ namespace Presto.SWCamp.Lyrics
                 allLineFontSize = 24;
             else
                 allLineFontSize++;
-                    
+
         }
 
         private void clickMinus(object sender, RoutedEventArgs e)   //전체 가사 모드에서의 글자 축소
@@ -322,6 +349,28 @@ namespace Presto.SWCamp.Lyrics
         private void clickInfo(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(songInfo);
+        }
+
+        private void repeat(object sender, RoutedEventArgs e)
+        {
+            if (repeatIsClicked == false)
+            {
+                repeatIsClicked = true;
+                //MessageBox.Show("반복할 시작 가사와 끝 가사를 선택해 주세요.\n반복 종료를 원하시면 반복 버튼을 한번더 눌러주세요.", "", MessageBoxButton.OK);
+            }
+            else if(repeatIsClicked = true && repeatStart == false)
+            {
+                MessageBox.Show("선택중입니다.");
+                return;
+            }
+            else if(repeatComplete == true)
+            {
+                repeatIsClicked = false;
+                repeatComplete = false;
+                repeatStart = false;
+                return;
+            }
+
         }
     }
 }

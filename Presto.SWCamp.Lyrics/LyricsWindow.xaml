@@ -127,6 +127,17 @@
                         </materialDesign:PackIcon.Foreground>
                     </materialDesign:PackIcon>
                 </Button>
+                <Button HorizontalAlignment="Left" Width="35" Margin="90,5" Style="{ StaticResource MaterialDesignFloatingActionMiniAccentButton }" Background="{x:Null}" VerticalAlignment="Top" Click="repeat" ToolTip="구간 반복">
+                    <materialDesign:PackIcon Kind="Repeat" Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <materialDesign:PackIcon.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFD69016"/>
+                                <GradientStop Color="#FFD6511E" Offset="0.747"/>
+                                <GradientStop Color="#FF9B330D" Offset="0.807"/>
+                            </LinearGradientBrush>
+                        </materialDesign:PackIcon.Foreground>
+                    </materialDesign:PackIcon>
+                </Button>
 
                 <Button HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource MaterialDesignFloatingActionMiniAccentButton }" BorderBrush="#70702222" Background="#B2222222" Click="Button_Click" ToolTip="일시 정지">
                     <Button.Effect>
